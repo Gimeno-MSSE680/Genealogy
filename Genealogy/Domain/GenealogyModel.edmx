@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GenealogyModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="GenealogyModelStoreContainer">
+    <EntitySet Name="Users" EntityType="GenealogyModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Logins" EntityType="GenealogyModel.Store.Logins" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Lists" EntityType="GenealogyModel.Store.Lists" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="People" EntityType="GenealogyModel.Store.People" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Fathers" EntityType="GenealogyModel.Store.Fathers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Mothers" EntityType="GenealogyModel.Store.Mothers" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="LoginUser" Association="GenealogyModel.Store.LoginUser">
+      <End Role="Login" EntitySet="Logins" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="PersonList" Association="GenealogyModel.Store.PersonList">
+      <End Role="Person" EntitySet="People" />
+      <End Role="List" EntitySet="Lists" />
+    </AssociationSet>
+    <AssociationSet Name="PersonFather" Association="GenealogyModel.Store.PersonFather">
+      <End Role="Person" EntitySet="People" />
+      <End Role="Father" EntitySet="Fathers" />
+    </AssociationSet>
+    <AssociationSet Name="PersonMother" Association="GenealogyModel.Store.PersonMother">
+      <End Role="Person" EntitySet="People" />
+      <End Role="Mother" EntitySet="Mothers" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userFirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="userLastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="userEmail" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Login_loginId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Logins">
+    <Key>
+      <PropertyRef Name="loginId" />
+    </Key>
+    <Property Name="loginId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Lists">
+    <Key>
+      <PropertyRef Name="listId" />
+    </Key>
+    <Property Name="listId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="knownPersonQuantity" Type="smallint" Nullable="false" />
+    <Property Name="unknownPersonQuantity" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="People">
+    <Key>
+      <PropertyRef Name="personId" />
+    </Key>
+    <Property Name="personId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="firstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="lastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="givenName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="gender" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="birthDate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="birthPlace" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="deathDate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="deathPlace" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="occupation" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Lists_listId" Type="int" Nullable="false" />
+    <Property Name="Fathers_fatherId" Type="int" Nullable="false" />
+    <Property Name="Mothers_motherId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Fathers">
+    <Key>
+      <PropertyRef Name="fatherId" />
+    </Key>
+    <Property Name="fatherId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fatherKnown" Type="bit" Nullable="false" />
+    <Property Name="fFirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="fLastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="fGivenName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Mothers">
+    <Key>
+      <PropertyRef Name="motherId" />
+    </Key>
+    <Property Name="motherId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="motherKnown" Type="bit" Nullable="false" />
+    <Property Name="mFirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="mLastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="mGivenName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="LoginUser">
+    <End Role="Login" Type="GenealogyModel.Store.Logins" Multiplicity="1" />
+    <End Role="User" Type="GenealogyModel.Store.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Login">
+        <PropertyRef Name="loginId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="Login_loginId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PersonList">
+    <End Role="Person" Type="GenealogyModel.Store.People" Multiplicity="*" />
+    <End Role="List" Type="GenealogyModel.Store.Lists" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="List">
+        <PropertyRef Name="listId" />
+      </Principal>
+      <Dependent Role="Person">
+        <PropertyRef Name="Lists_listId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PersonFather">
+    <End Role="Person" Type="GenealogyModel.Store.People" Multiplicity="*" />
+    <End Role="Father" Type="GenealogyModel.Store.Fathers" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Father">
+        <PropertyRef Name="fatherId" />
+      </Principal>
+      <Dependent Role="Person">
+        <PropertyRef Name="Fathers_fatherId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PersonMother">
+    <End Role="Person" Type="GenealogyModel.Store.People" Multiplicity="*" />
+    <End Role="Mother" Type="GenealogyModel.Store.Mothers" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Mother">
+        <PropertyRef Name="motherId" />
+      </Principal>
+      <Dependent Role="Person">
+        <PropertyRef Name="Mothers_motherId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="GenealogyModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="GenealogyModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="GenealogyModel.User" />
+          <EntitySet Name="Logins" EntityType="GenealogyModel.Login" />
+          <AssociationSet Name="LoginUser" Association="GenealogyModel.LoginUser">
+            <End Role="Login" EntitySet="Logins" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="Lists" EntityType="GenealogyModel.List" />
+          <EntitySet Name="People" EntityType="GenealogyModel.Person" />
+          <AssociationSet Name="PersonList" Association="GenealogyModel.PersonList">
+            <End Role="Person" EntitySet="People" />
+            <End Role="List" EntitySet="Lists" />
+          </AssociationSet>
+          <EntitySet Name="Fathers" EntityType="GenealogyModel.Father" />
+          <EntitySet Name="Mothers" EntityType="GenealogyModel.Mother" />
+          <AssociationSet Name="PersonFather" Association="GenealogyModel.PersonFather">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Father" EntitySet="Fathers" />
+          </AssociationSet>
+          <AssociationSet Name="PersonMother" Association="GenealogyModel.PersonMother">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Mother" EntitySet="Mothers" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Type="Int32" Name="userId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="userFirstName" Nullable="false" />
+          <Property Type="String" Name="userLastName" Nullable="false" />
+          <Property Type="String" Name="userEmail" Nullable="false" />
+          <NavigationProperty Name="Login" Relationship="GenealogyModel.LoginUser" FromRole="User" ToRole="Login" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="loginId" />
+          </Key>
+          <Property Type="Int32" Name="loginId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="username" Nullable="false" />
+          <Property Type="String" Name="password" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="GenealogyModel.LoginUser" FromRole="Login" ToRole="User" />
+        </EntityType>
+        <Association Name="LoginUser">
+          <End Type="GenealogyModel.Login" Role="Login" Multiplicity="1" />
+          <End Type="GenealogyModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        <EntityType Name="List">
+          <Key>
+            <PropertyRef Name="listId" />
+          </Key>
+          <Property Type="Int32" Name="listId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int16" Name="knownPersonQuantity" Nullable="false" />
+          <Property Type="Int16" Name="unknownPersonQuantity" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="GenealogyModel.PersonList" FromRole="List" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="personId" />
+          </Key>
+          <Property Type="Int32" Name="personId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="firstName" Nullable="false" />
+          <Property Type="String" Name="lastName" Nullable="false" />
+          <Property Type="String" Name="givenName" Nullable="false" />
+          <Property Type="String" Name="gender" Nullable="false" />
+          <Property Type="String" Name="birthDate" Nullable="false" />
+          <Property Type="String" Name="birthPlace" Nullable="false" />
+          <Property Type="String" Name="deathDate" Nullable="false" />
+          <Property Type="String" Name="deathPlace" Nullable="false" />
+          <Property Type="String" Name="occupation" Nullable="false" />
+          <NavigationProperty Name="Lists" Relationship="GenealogyModel.PersonList" FromRole="Person" ToRole="List" />
+          <NavigationProperty Name="Fathers" Relationship="GenealogyModel.PersonFather" FromRole="Person" ToRole="Father" />
+          <NavigationProperty Name="Mothers" Relationship="GenealogyModel.PersonMother" FromRole="Person" ToRole="Mother" />
+        </EntityType>
+        <Association Name="PersonList">
+          <End Type="GenealogyModel.Person" Role="Person" Multiplicity="*" />
+          <End Type="GenealogyModel.List" Role="List" Multiplicity="1" />
+        </Association>
+        <EntityType Name="Father">
+          <Key>
+            <PropertyRef Name="fatherId" />
+          </Key>
+          <Property Type="Int32" Name="fatherId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Boolean" Name="fatherKnown" Nullable="false" />
+          <Property Type="String" Name="fFirstName" Nullable="false" />
+          <Property Type="String" Name="fLastName" Nullable="false" />
+          <Property Type="String" Name="fGivenName" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="GenealogyModel.PersonFather" FromRole="Father" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="Mother">
+          <Key>
+            <PropertyRef Name="motherId" />
+          </Key>
+          <Property Type="Int32" Name="motherId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Boolean" Name="motherKnown" Nullable="false" />
+          <Property Type="String" Name="mFirstName" Nullable="false" />
+          <Property Type="String" Name="mLastName" Nullable="false" />
+          <Property Type="String" Name="mGivenName" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="GenealogyModel.PersonMother" FromRole="Mother" ToRole="Person" />
+        </EntityType>
+        <Association Name="PersonFather">
+          <End Type="GenealogyModel.Person" Role="Person" Multiplicity="*" />
+          <End Type="GenealogyModel.Father" Role="Father" Multiplicity="1" />
+        </Association>
+        <Association Name="PersonMother">
+          <End Type="GenealogyModel.Person" Role="Person" Multiplicity="*" />
+          <End Type="GenealogyModel.Mother" Role="Mother" Multiplicity="1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GenealogyModelStoreContainer" CdmEntityContainer="GenealogyModelContainer">
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(GenealogyModel.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="userFirstName" ColumnName="userFirstName" />
+          <ScalarProperty Name="userLastName" ColumnName="userLastName" />
+          <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Logins">
+      <EntityTypeMapping TypeName="IsTypeOf(GenealogyModel.Login)">
+        <MappingFragment StoreEntitySet="Logins">
+          <ScalarProperty Name="loginId" ColumnName="loginId" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lists">
+      <EntityTypeMapping TypeName="IsTypeOf(GenealogyModel.List)">
+        <MappingFragment StoreEntitySet="Lists">
+          <ScalarProperty Name="listId" ColumnName="listId" />
+          <ScalarProperty Name="knownPersonQuantity" ColumnName="knownPersonQuantity" />
+          <ScalarProperty Name="unknownPersonQuantity" ColumnName="unknownPersonQuantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="People">
+      <EntityTypeMapping TypeName="IsTypeOf(GenealogyModel.Person)">
+        <MappingFragment StoreEntitySet="People">
+          <ScalarProperty Name="personId" ColumnName="personId" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="givenName" ColumnName="givenName" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+          <ScalarProperty Name="birthDate" ColumnName="birthDate" />
+          <ScalarProperty Name="birthPlace" ColumnName="birthPlace" />
+          <ScalarProperty Name="deathDate" ColumnName="deathDate" />
+          <ScalarProperty Name="deathPlace" ColumnName="deathPlace" />
+          <ScalarProperty Name="occupation" ColumnName="occupation" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Fathers">
+      <EntityTypeMapping TypeName="IsTypeOf(GenealogyModel.Father)">
+        <MappingFragment StoreEntitySet="Fathers">
+          <ScalarProperty Name="fatherId" ColumnName="fatherId" />
+          <ScalarProperty Name="fatherKnown" ColumnName="fatherKnown" />
+          <ScalarProperty Name="fFirstName" ColumnName="fFirstName" />
+          <ScalarProperty Name="fLastName" ColumnName="fLastName" />
+          <ScalarProperty Name="fGivenName" ColumnName="fGivenName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mothers">
+      <EntityTypeMapping TypeName="IsTypeOf(GenealogyModel.Mother)">
+        <MappingFragment StoreEntitySet="Mothers">
+          <ScalarProperty Name="motherId" ColumnName="motherId" />
+          <ScalarProperty Name="motherKnown" ColumnName="motherKnown" />
+          <ScalarProperty Name="mFirstName" ColumnName="mFirstName" />
+          <ScalarProperty Name="mLastName" ColumnName="mLastName" />
+          <ScalarProperty Name="mGivenName" ColumnName="mGivenName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="LoginUser" TypeName="GenealogyModel.LoginUser" StoreEntitySet="Users">
+      <EndProperty Name="Login">
+        <ScalarProperty Name="loginId" ColumnName="Login_loginId" />
+      </EndProperty>
+      <EndProperty Name="User">
+        <ScalarProperty Name="userId" ColumnName="userId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PersonList" TypeName="GenealogyModel.PersonList" StoreEntitySet="People">
+      <EndProperty Name="List">
+        <ScalarProperty Name="listId" ColumnName="Lists_listId" />
+      </EndProperty>
+      <EndProperty Name="Person">
+        <ScalarProperty Name="personId" ColumnName="personId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PersonFather" TypeName="GenealogyModel.PersonFather" StoreEntitySet="People">
+      <EndProperty Name="Father">
+        <ScalarProperty Name="fatherId" ColumnName="Fathers_fatherId" />
+      </EndProperty>
+      <EndProperty Name="Person">
+        <ScalarProperty Name="personId" ColumnName="personId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PersonMother" TypeName="GenealogyModel.PersonMother" StoreEntitySet="People">
+      <EndProperty Name="Mother">
+        <ScalarProperty Name="motherId" ColumnName="Mothers_motherId" />
+      </EndProperty>
+      <EndProperty Name="Person">
+        <ScalarProperty Name="personId" ColumnName="personId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
