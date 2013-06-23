@@ -2,8 +2,8 @@
  * Genealogy.Business.PersonMgr
  * PersonMgr to manage the work flow of the services related to Person
  * @author Kelly J Gimeno
- * @version 1
- * @date 06/06/2013
+ * @version 2
+ * @date 06/20/2013
  *****************************************************************************/
 using System;
 using System.Configuration;
@@ -23,8 +23,8 @@ namespace Business
             try
             {
                 IPersonSvc personSvc = (IPersonSvc)GetService(typeof(IPersonSvc).Name);
-                personSvc.getPerson(person);
-                return person;
+                Person personInfo = personSvc.getPerson(person);
+                return personInfo;
             }
             catch (Exception e)
             {
@@ -39,7 +39,14 @@ namespace Business
             try
             {
                 IPersonSvc personSvc = (IPersonSvc)GetService(typeof(IPersonSvc).Name);
-                personSvc.addPerson(person);
+                
+                if (person.firstName == "" && person.lastName == "")
+                {
+                    person.firstName = "Person";
+                    person.lastName = "Unknown";
+                }
+
+                personSvc.addPerson(person); // ERROR HERE WITH UNIT TESTING BUT i BELIEVE IT IS DUE TO THE PersonSvcImpl addPerson method
             }
             catch (Exception e)
             {
@@ -48,8 +55,6 @@ namespace Business
             }
 
         } // End addPerson(Person person)
-
-        //} // End addPerson(Person person)
 
         public void editPerson(Person person)
         {
@@ -80,6 +85,12 @@ namespace Business
             }
 
         } // End deletePerson(Person person)
+
+        public IEnumerable<Person> GetFamily()
+        {
+            IPersonSvc personSvc = (IPersonSvc)GetService(typeof(IPersonSvc).Name);
+            return personSvc.GetFamily();
+        }
 
     } // End PersonMgr class
 

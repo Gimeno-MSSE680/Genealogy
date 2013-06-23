@@ -17,8 +17,8 @@ namespace Presentation
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-//            Application.Run(new FormFather());
-            Application.Run(new FormPerson());
+            Application.Run(new FormLogin());
+//            Application.Run(new FormPerson());
         }
     }
 }

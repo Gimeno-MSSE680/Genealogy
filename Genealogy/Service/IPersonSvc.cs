@@ -2,8 +2,8 @@
  * Genealogy.Service.IPersonSvc
  * IPersonSvc gets, adds, edits, and deletes a person from the database
  * @author Kelly J Gimeno
- * @version 1
- * @date 05/29/2013
+ * @version 2
+ * @date 06/22/2013
  *****************************************************************************/
 using System;
 using System.Collections.Generic;
@@ -27,6 +27,9 @@ namespace Service
 
         // Deletes person from the database
         void deletePerson(Person person);
+
+        // Grabs every person from the database
+        IEnumerable<Person> GetFamily();
 
     } // End IPersonSvc interface
 

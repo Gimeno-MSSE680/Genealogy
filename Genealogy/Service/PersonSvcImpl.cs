@@ -2,8 +2,8 @@
  * Genealogy.Service.PersonSvcImpl
  * Implementation of Person services
  * @author Kelly J Gimeno
- * @version 1
- * @date 05/29/2013
+ * @version 2
+ * @date 06/22/2013
  *****************************************************************************/
 using System;
 using System.Collections;
@@ -27,7 +27,12 @@ namespace Service
             try
             {
                 Console.WriteLine("Entering method PersonSvcImpl::getPerson");
-                return person;
+                GenealogyModelContainer db = new GenealogyModelContainer();
+
+                // Currently pulls the person stored in 4th index in the database table
+                Person savedPerson = (from d in db.People where d.personId == 4 select d).Single();
+
+                return savedPerson;
             }
             catch (PersonNotFoundException pe)
             {
@@ -43,7 +48,7 @@ namespace Service
                 GenealogyModelContainer db = new GenealogyModelContainer();
                 db.People.Add(person);
 
-                db.SaveChanges();
+                db.SaveChanges(); // FAILS HERE WITH PERSON UNIT TESTING
             }
             catch (Exception e)
             {
@@ -79,6 +84,17 @@ namespace Service
                 throw pe;
             }
         } // End deletePerson(Person person)
+
+        public IEnumerable<Person> GetFamily()
+        {
+            Console.WriteLine("Entering method PersonSvcImpl::getFamily");
+            GenealogyModelContainer db = new GenealogyModelContainer();
+            List<Person> savedPerson = (from d in db.People select d).ToList();
+
+            IOrderedQueryable<Person> lastNameQuery = (from person in db.People orderby person.lastName select person);
+
+            return lastNameQuery;
+        } // End GetFamily()
 
     } // End PersonSvcImpl class
 

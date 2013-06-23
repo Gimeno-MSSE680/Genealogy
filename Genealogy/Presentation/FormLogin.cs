@@ -25,8 +25,22 @@ namespace Presentation
             login.username = textBoxUsername.Text;
             login.password = textBoxPassword.Text;
 
-            UserMgr userMgr = new UserMgr();
-            Login loginAuthentication = userMgr.authenticateLogin(login);
+            LoginMgr loginMgr = new LoginMgr();
+            Boolean isAuthenticated = loginMgr.authenticateLogin(login);
+
+            if (isAuthenticated)
+            {
+                MessageBox.Show("Welcome to your family tree!", "Login success",
+                    MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+    
+                FormPerson formPerson = new FormPerson();
+                formPerson.Show();
+            }
+            else if (!isAuthenticated)
+            {
+                MessageBox.Show("Invalid username and/or password. Try again.", "Login failed",
+                    MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
 
         } // End buttonLogin_Click(object sender, EventArgs e)
 
@@ -34,8 +48,7 @@ namespace Presentation
         {
             textBoxUsername.Clear();
             textBoxPassword.Clear();
-
-        } // End buttonClear_Click(object sender, EventArgs e)
+        }
 
     } // End FormLogin class
 

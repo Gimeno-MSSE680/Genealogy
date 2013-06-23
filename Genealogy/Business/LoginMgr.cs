@@ -1,9 +1,9 @@
 ﻿/*****************************************************************************
- * Genealogy.Business.UserMgr
- * UserMgr to manage the work flow of the services related to User
+ * Genealogy.Business.LoginMgr
+ * LoginMgr to manage the work flow of the services related to Login
  * @author Kelly J Gimeno
- * @version 1
- * @date 06/06/2013
+ * @version 2
+ * @date 06/20/2013
  *****************************************************************************/
 using System;
 using System.Collections.Generic;
@@ -15,15 +15,31 @@ using Domain;
 
 namespace Business
 {
-    public class UserMgr : Manager
+    public class LoginMgr : Manager
     {
-        public User getUser(User user)
+        public Boolean authenticateLogin(Login login)
         {
             try
             {
-                IUserSvc userSvc = (IUserSvc)GetService(typeof(IUserSvc).Name);
-                userSvc.getUser(user);
-                return user;
+                ILoginSvc loginSvc = (ILoginSvc)GetService(typeof(ILoginSvc).Name);
+                Boolean loginSuccess = loginSvc.authenticateLogin(login);
+
+                return Convert.ToBoolean(loginSuccess);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception occured: {0}", e);
+                throw e;
+            }
+        
+        } // End authenticateLogin(Login login)
+
+        public void addLogin(Login login)
+        {
+            try
+            {
+                ILoginSvc loginSvc = (ILoginSvc)GetService(typeof(ILoginSvc).Name);
+                loginSvc.addLogin(login);
             }
             catch (Exception e)
             {
@@ -31,29 +47,14 @@ namespace Business
                 throw e;
             }
 
-        } // End getUser(User user)
+        } // End addLogin(Login login)
 
-        public void addUser(User user)
+        public void editLogin(Login login)
         {
             try
             {
-                IUserSvc userSvc = (IUserSvc)GetService(typeof(IUserSvc).Name);
-                userSvc.addUser(user);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception occured: {0}", e);
-                throw e;
-            }
-
-        } // End addUser(User user, Login login)
-
-        public void editUser(User user)
-        {
-            try
-            {
-                IUserSvc userSvc = (IUserSvc)GetService(typeof(IUserSvc).Name);
-                userSvc.editUser(user);
+                ILoginSvc loginSvc = (ILoginSvc)GetService(typeof(ILoginSvc).Name);
+                loginSvc.editLogin(login);
             }
             catch (Exception e)
             {
@@ -63,21 +64,18 @@ namespace Business
 
         } // End editUser(User user, Login login)
 
-        public void deleteUser(User user)
+        public void deleteLogin(Login login)
         {
             try
             {
-                IUserSvc userSvc = (IUserSvc)GetService(typeof(IUserSvc).Name);
-                userSvc.deleteUser(user);
+                ILoginSvc loginSvc = (ILoginSvc)GetService(typeof(ILoginSvc).Name);
+                loginSvc.deleteLogin(login);
             }
             catch (Exception e)
             {
                 Console.WriteLine("Exception occured: {0}", e);
                 throw e;
             }
-
-        } // End deleteUser(User user, Login login)
-
-    } // End UserMgr class
-
-} // End Business namespace
+        }
+    }
+}

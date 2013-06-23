@@ -14,9 +14,17 @@ namespace Presentation
 {
     public partial class FormFather : Form
     {
+        private Father fatherInfo = new Father();
+        private FormPerson callback = null;
         public FormFather()
         {
             InitializeComponent();
+        }
+
+        public FormFather(FormPerson callback)
+        {
+            InitializeComponent();
+            this.callback = callback;
         }
 
         private void checkBoxFatherKnown_CheckedChanged(object sender, EventArgs e)
@@ -50,6 +58,10 @@ namespace Presentation
 
             FatherMgr fatherMgr = new FatherMgr();
             fatherMgr.addFather(father);
+
+//            callback.Notify(popupInfo);
+//            callback.Notify(father);
+            this.Dispose();
         }
 
         private void buttonClear_Click(object sender, EventArgs e)

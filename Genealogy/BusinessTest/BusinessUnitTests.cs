@@ -22,7 +22,7 @@ namespace BusinessTest
 
             // Act and Assert - verify the PersonMgr is capable of calling on service methods
             personMgr.getPerson(person);
-//            personMgr.addPerson(person);
+//            personMgr.addPerson(person);  // ERROR with PersonSvcImple
             personMgr.editPerson(person);
             personMgr.deletePerson(person);
 
@@ -75,18 +75,36 @@ namespace BusinessTest
         {
             // Arange - variables for testing the managers
             User user = new User();
-            Login login = new Login();
 
             UserMgr userMgr = new UserMgr();
 
             // Act and Assert - verify the UserMgr is capable of calling on service methods
             userMgr.getUser(user);
-            userMgr.addUser(user, login);
-            userMgr.editUser(user, login);
-            userMgr.deleteUser(user, login);
-            userMgr.authenticateLogin(login);
+            userMgr.addUser(user);
+            userMgr.editUser(user);
+            userMgr.deleteUser(user);
 
         } // End UserMgrTest()
+
+        /*
+         * Method LoginMgrTest() to test whether the manager class works
+         * with the service class 
+         */
+        [TestMethod]
+        public void LoginMgrTest()
+        {
+            // Arange - variables for testing the managers
+            Login login = new Login();
+
+            LoginMgr loginMgr = new LoginMgr();
+
+            // Act and Assert - verify the UserMgr is capable of calling on service methods
+            loginMgr.authenticateLogin(login);
+            loginMgr.addLogin(login);
+            loginMgr.editLogin(login);
+            loginMgr.deleteLogin(login);
+
+        } // End LoginMgrTest()
 
         /*
          * Method ListMgrTest() to test whether the manager class works

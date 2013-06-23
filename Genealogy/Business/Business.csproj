@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="FatherMgr.cs" />
     <Compile Include="ListMgr.cs" />
+    <Compile Include="LoginMgr.cs" />
     <Compile Include="Manager.cs" />
     <Compile Include="MotherMgr.cs" />
     <Compile Include="PersonMgr.cs" />
