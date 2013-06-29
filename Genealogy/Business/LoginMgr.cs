@@ -76,6 +76,9 @@ namespace Business
                 Console.WriteLine("Exception occured: {0}", e);
                 throw e;
             }
-        }
-    }
-}
+
+        } // End deleteLogin(Login login)
+
+    } // End LoginMgr class
+
+} // End Business namespace 

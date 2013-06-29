@@ -45,10 +45,10 @@ namespace Service
         {
             try
             {
+                Console.WriteLine("Entering method PersonSvcImpl::addPerson");
                 GenealogyModelContainer db = new GenealogyModelContainer();
                 db.People.Add(person);
-
-                db.SaveChanges(); // FAILS HERE WITH PERSON UNIT TESTING
+                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -57,7 +57,6 @@ namespace Service
             }
 
         } // End addPerson(Person person)
-
 
         public void editPerson(Person person)
         {
@@ -85,6 +84,9 @@ namespace Service
             }
         } // End deletePerson(Person person)
 
+        /*
+         * GetFamily() gets all people currently stored in the People database table
+         */
         public IEnumerable<Person> GetFamily()
         {
             Console.WriteLine("Entering method PersonSvcImpl::getFamily");

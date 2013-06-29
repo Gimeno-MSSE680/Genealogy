@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * Genealogy.BusinessTest.BusinessUnitTests
+ * BusinessUnitTests tests manager methods and whether they are capable of working
+ * with with the flow of the application (business to service using the factory)
+ * @author Kelly J Gimeno
+ * @version 1
+ * @date 06/08/2013
+ */
+using System;
 using System.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Business;
@@ -20,9 +28,40 @@ namespace BusinessTest
             Person person = new Person();
             PersonMgr personMgr = new PersonMgr();
 
+            List list = new List();
+            Father father = new Father();
+            Mother mother = new Mother();
+
+            person.firstName = "Round";
+            person.lastName = "About";
+            person.givenName = "Robin";
+            person.gender = "male";
+            person.birthDate = "January 2000";
+            person.birthPlace = "Hollywood";
+            person.deathDate = "December 3000";
+            person.deathPlace = "Hollywood";
+            person.occupation = "Shine";
+
+            list.knownPersonQuantity = 1;
+            list.unknownPersonQuantity = 0;
+
+            father.fatherKnown = false;
+            father.fFirstName = "";
+            father.fLastName = "";
+            father.fGivenName = "";
+
+            mother.motherKnown = false;
+            mother.mFirstName = "";
+            mother.mLastName = "";
+            mother.mGivenName = "";
+
+            person.Lists = list;        // because of the Person/List relationship
+            person.Fathers = father;    // because of the Person/Father relationship
+            person.Mothers = mother;    // because of the Person/Mother relationship
+
             // Act and Assert - verify the PersonMgr is capable of calling on service methods
             personMgr.getPerson(person);
-//            personMgr.addPerson(person);  // ERROR with PersonSvcImple
+            personMgr.addPerson(person);
             personMgr.editPerson(person);
             personMgr.deletePerson(person);
 

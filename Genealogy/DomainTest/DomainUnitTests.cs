@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * Genealogy.DomainTest.DomainUnitTests
+ * DomainUnitTests tests domain objects and whether they can be stored,
+ * edited, deleted, and saved to the database
+ * @author Kelly J Gimeno
+ * @version 1
+ * @date 06/01/2013
+ */
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -193,7 +201,7 @@ namespace DomainTest
             GenealogyModelContainer db = new GenealogyModelContainer();
             Person person = db.People.SingleOrDefault(p => p.personId == pId);
 
-            person.firstName = "Mr. Big";   // assign a new name
+            person.firstName = "Thomnas";   // assign a new name
             person.gender = "male";         // assign a new gender
 
             // Act - save changes to the database
@@ -256,17 +264,53 @@ namespace DomainTest
         [TestMethod]
         public void TestDeletePerson()
         {
-            // Arrange - select a person for deletion from the database
-            int pId = 3;       // variable used for specific person location in database
+            // Arrange - add person to the database to ensure that there is a person
+            // to be deleted from the database 
+            Person person = new Person();
+            List list = new List();
+            Father father = new Father();
+            Mother mother = new Mother();
+
             GenealogyModelContainer db = new GenealogyModelContainer();
-            Person person = db.People.SingleOrDefault(p => p.personId == pId);
 
+            person.firstName = "Fun";
+            person.lastName = "Risers";
+            person.givenName = "Risers";
+            person.gender = "male";
+            person.birthDate = "January 2000";
+            person.birthPlace = "Hollywood";
+            person.deathDate = "December 3000";
+            person.deathPlace = "Hollywood";
+            person.occupation = "Shine";
+
+            list.knownPersonQuantity = 1;
+            list.unknownPersonQuantity = 0;
+
+            father.fatherKnown = false;
+            father.fFirstName = "";
+            father.fLastName = "";
+            father.fGivenName = "";
+
+            mother.motherKnown = false;
+            mother.mFirstName = "";
+            mother.mLastName = "";
+            mother.mGivenName = "";
+
+            person.Lists = list;        // because of the Person/List relationship
+            person.Fathers = father;    // because of the Person/Father relationship
+            person.Mothers = mother;    // because of the Person/Mother relationship
+
+            db.People.Add(person);
+            db.SaveChanges();
+
+            // Act - search and remove person from database and save
+            Person savedPerson = (from d in db.People where d.personId == person.personId select d).Single();
             db.People.Remove(person);
-
-            // Act - save changes to the database
             db.SaveChanges();
 
             // Assert
+            Person removePerson = (from d in db.People where d.personId == savedPerson.personId select d).FirstOrDefault();
+            Assert.IsNull(removePerson);
 
         } // end TestDeletePerson()
 
@@ -278,18 +322,31 @@ namespace DomainTest
         public void TestDeleteUser()
         {
             // Arrange - select a user for deletion from the database
-            int pId = 3;       // variable used for specific user location in database
+            User user = new User();
+            Login login = new Login();
+
             GenealogyModelContainer db = new GenealogyModelContainer();
-            User user = db.Users.SingleOrDefault(p => p.userId == pId);
-            Login login = db.Logins.SingleOrDefault(p => p.loginId == pId);
 
+            user.userFirstName = "Johny";
+            user.userLastName = "Rocket";
+            user.userEmail = "johny.rocket@email.com";
+
+            login.username = "RocketMan";
+            login.password = "FlyersPast2$";
+
+            user.Login = login;        // because of the User/Login relationship
+
+            db.Users.Add(user);
+            db.SaveChanges();
+
+            // Act - search and remove user from database and save
+            User savedUser = (from d in db.Users where d.userId == user.userId select d).Single();
             db.Users.Remove(user);
-            db.Logins.Remove(login);
-
-            // Act - save changes to the database
             db.SaveChanges();
 
             // Assert
+            User removeUser = (from d in db.Users where d.userId == savedUser.userId select d).FirstOrDefault();
+            Assert.IsNull(removeUser);
 
         } // end TestDeleteUser()
 

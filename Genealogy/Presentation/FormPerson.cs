@@ -23,6 +23,12 @@ namespace Presentation
             InitializeComponent();
         }
 
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Exit the application
+            System.Windows.Forms.Application.Exit();
+        }
+
         //*******************************************************************************
         //*******************************************************************************
         //                     SPLIT CONTAINER ADD PERSON 
@@ -42,12 +48,6 @@ namespace Presentation
             textBoxDeathDate.Clear();
             textBoxDeathPlace.Clear();
             textBoxOccupation.Clear();
-        }
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            // Exit the application
-            System.Windows.Forms.Application.Exit();
         }
 
         private void buttonContinue_Click(object sender, EventArgs e)
@@ -222,14 +222,6 @@ namespace Presentation
             splitContainerAddPerson.Panel1.Enabled = true;
         }
 
-        private void splitContainerAddParents_Panel1_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
-        private void splitContainerAddParents_Panel2_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
         //*******************************************************************************
         //*******************************************************************************
         //                 TAB CONTROL PERSON - VIEW SAVED FAMILY MEMBERS                
@@ -255,6 +247,7 @@ namespace Presentation
                 listBoxViewFamily.Items.Add(personInfo);
             }
         }
+
     } // End FormPerson class
 
 } // End Presentation namespace

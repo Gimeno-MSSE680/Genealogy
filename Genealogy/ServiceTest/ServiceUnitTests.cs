@@ -15,6 +15,8 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Service;
 using Domain;
+using System.Data;
+using System.Linq;
 
 namespace ServiceTest
 {
@@ -33,14 +35,44 @@ namespace ServiceTest
             Person person = new Person();
             IPersonSvc personService;
 
+            List list = new List();
+            Father father = new Father();
+            Mother mother = new Mother();
+
+            person.firstName = "Fun";
+            person.lastName = "Risers";
+            person.givenName = "Risers";
+            person.gender = "male";
+            person.birthDate = "January 2000";
+            person.birthPlace = "Hollywood";
+            person.deathDate = "December 3000";
+            person.deathPlace = "Hollywood";
+            person.occupation = "Shine";
+
+            list.knownPersonQuantity = 1;
+            list.unknownPersonQuantity = 0;
+
+            father.fatherKnown = false;
+            father.fFirstName = "";
+            father.fLastName = "";
+            father.fGivenName = "";
+
+            mother.motherKnown = false;
+            mother.mFirstName = "";
+            mother.mLastName = "";
+            mother.mGivenName = "";
+
+            person.Lists = list;        // because of the Person/List relationship
+            person.Fathers = father;    // because of the Person/Father relationship
+            person.Mothers = mother;    // because of the Person/Mother relationship
+
             // Act - use GetPersonSvc method through the factory
-//            personService = (IPersonSvc)factory.GetService("IPersonSvc");
-            personService = (IPersonSvc)factory.GetService(typeof(IPersonSvc).Name);
+            personService = (IPersonSvc)factory.GetService("IPersonSvc");
 
             // Assert - verify that the interface methods work through the factory 
             //          return of the implementation 
             personService.getPerson(person);
-//            personService.addPerson(person); // ERROR with addPerson
+            personService.addPerson(person);
             personService.editPerson(person);
             personService.deletePerson(person);
 
@@ -157,7 +189,7 @@ namespace ServiceTest
 
             // Assert - verify that the interface methods work through the factory 
             //          return of the implementation 
-//            loginSvc.authenticateLogin(login);
+            loginSvc.authenticateLogin(login);
             loginSvc.addLogin(login);
             loginSvc.editLogin(login);
             loginSvc.deleteLogin(login);

@@ -28,28 +28,23 @@ namespace Service
 
                 Boolean isAuthenticated = false;
 
-                // int variable used so that each member of the database table is checked and no more.
-                // Without this, I get an exception error because the query is searching beyond the list
-                int sizeOfList = db.Logins.Count();
-
-                int loginSearchCount = 1;
-                int checkLoginId = 1;
-
-                while (loginSearchCount <= sizeOfList)
+                // Try/catch statement to search for user input username and password.  The catch statement allows the
+                // application to output an error message to the user if the username and/or password is not found.
+                // Otherwise, the FirstOrDefault method would throw an exception error if the username and password 
+                // were not found within the database
+                try
                 {
-                    Login savedLogin = (from d in db.Logins where d.loginId == checkLoginId select d).Single();
-
-                    if (savedLogin.username == login.username && savedLogin.password == login.password)
+                    Login savedLogin = (from d in db.Logins where d.username == login.username select d).FirstOrDefault();
+              
+                    if (Equals(savedLogin.username, login.username))
                     {
-                        isAuthenticated = true;
-                        loginSearchCount = sizeOfList + 1;
+                        if (Equals(savedLogin.password, login.password))
+                            isAuthenticated = true;
                     }
-                    else if (savedLogin.username != login.username || savedLogin.password != login.password)
-                    {
-                        isAuthenticated = false;
-                        loginSearchCount++;
-                        checkLoginId++;
-                    }
+                }
+                catch
+                {
+                    return isAuthenticated;
                 }
 
                 return isAuthenticated;

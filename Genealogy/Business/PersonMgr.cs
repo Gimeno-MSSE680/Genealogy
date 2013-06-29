@@ -46,7 +46,7 @@ namespace Business
                     person.lastName = "Unknown";
                 }
 
-                personSvc.addPerson(person); // ERROR HERE WITH UNIT TESTING BUT i BELIEVE IT IS DUE TO THE PersonSvcImpl addPerson method
+                personSvc.addPerson(person);
             }
             catch (Exception e)
             {
@@ -88,9 +88,17 @@ namespace Business
 
         public IEnumerable<Person> GetFamily()
         {
-            IPersonSvc personSvc = (IPersonSvc)GetService(typeof(IPersonSvc).Name);
-            return personSvc.GetFamily();
-        }
+            try
+            {
+                IPersonSvc personSvc = (IPersonSvc)GetService(typeof(IPersonSvc).Name);
+                return personSvc.GetFamily();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception occured: {0}", e);
+                throw e;
+            }
+        } // End IEnumerable<Person> GetFamily()
 
     } // End PersonMgr class
 

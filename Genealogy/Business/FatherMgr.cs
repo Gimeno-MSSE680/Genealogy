@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*****************************************************************************
+ * Genealogy.Business.FatherMgr
+ * FatherMgr to manage the work flow of the services related to Father
+ * @author Kelly J Gimeno
+ * @version 2
+ * @date 06/20/2013
+ *****************************************************************************/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

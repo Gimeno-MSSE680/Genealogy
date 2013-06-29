@@ -28,6 +28,9 @@ namespace Presentation
             LoginMgr loginMgr = new LoginMgr();
             Boolean isAuthenticated = loginMgr.authenticateLogin(login);
 
+            // if input username and password match username and password stored in the
+            // database, procede to the genealogy application.  Otherwise, allow user
+            // to try again.
             if (isAuthenticated)
             {
                 MessageBox.Show("Welcome to your family tree!", "Login success",

@@ -52,6 +52,10 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlPerson = new System.Windows.Forms.TabControl();
+            this.tabPagePeopleList = new System.Windows.Forms.TabPage();
+            this.label3 = new System.Windows.Forms.Label();
+            this.buttonViewFamily = new System.Windows.Forms.Button();
+            this.listBoxViewFamily = new System.Windows.Forms.ListBox();
             this.tabPageAddPerson = new System.Windows.Forms.TabPage();
             this.splitContainerAddPerson = new System.Windows.Forms.SplitContainer();
             this.labelAddPersonDescription = new System.Windows.Forms.Label();
@@ -79,10 +83,6 @@
             this.labelMotherLastName = new System.Windows.Forms.Label();
             this.labelMotherFirstName = new System.Windows.Forms.Label();
             this.checkBoxMotherKnow = new System.Windows.Forms.CheckBox();
-            this.tabPagePeopleList = new System.Windows.Forms.TabPage();
-            this.label3 = new System.Windows.Forms.Label();
-            this.buttonViewFamily = new System.Windows.Forms.Button();
-            this.listBoxViewFamily = new System.Windows.Forms.ListBox();
             this.buttonClearFather = new System.Windows.Forms.Button();
             this.textBoxFGivenName = new System.Windows.Forms.TextBox();
             this.labelFFirstName = new System.Windows.Forms.Label();
@@ -106,6 +106,7 @@
             this.labelAddPersonButton = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabControlPerson.SuspendLayout();
+            this.tabPagePeopleList.SuspendLayout();
             this.tabPageAddPerson.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerAddPerson)).BeginInit();
             this.splitContainerAddPerson.Panel1.SuspendLayout();
@@ -115,7 +116,6 @@
             this.splitContainerAddParents.Panel1.SuspendLayout();
             this.splitContainerAddParents.Panel2.SuspendLayout();
             this.splitContainerAddParents.SuspendLayout();
-            this.tabPagePeopleList.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelFirstName
@@ -317,13 +317,55 @@
             // 
             // tabControlPerson
             // 
-            this.tabControlPerson.Controls.Add(this.tabPageAddPerson);
             this.tabControlPerson.Controls.Add(this.tabPagePeopleList);
+            this.tabControlPerson.Controls.Add(this.tabPageAddPerson);
             this.tabControlPerson.Location = new System.Drawing.Point(13, 40);
             this.tabControlPerson.Name = "tabControlPerson";
             this.tabControlPerson.SelectedIndex = 0;
             this.tabControlPerson.Size = new System.Drawing.Size(643, 572);
             this.tabControlPerson.TabIndex = 22;
+            // 
+            // tabPagePeopleList
+            // 
+            this.tabPagePeopleList.Controls.Add(this.label3);
+            this.tabPagePeopleList.Controls.Add(this.buttonViewFamily);
+            this.tabPagePeopleList.Controls.Add(this.listBoxViewFamily);
+            this.tabPagePeopleList.Location = new System.Drawing.Point(4, 25);
+            this.tabPagePeopleList.Name = "tabPagePeopleList";
+            this.tabPagePeopleList.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPagePeopleList.Size = new System.Drawing.Size(635, 543);
+            this.tabPagePeopleList.TabIndex = 1;
+            this.tabPagePeopleList.Text = "View saved family members";
+            this.tabPagePeopleList.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(78, 66);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(455, 17);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "To view an updated list of family members, click \"View Family\"";
+            // 
+            // buttonViewFamily
+            // 
+            this.buttonViewFamily.Location = new System.Drawing.Point(179, 140);
+            this.buttonViewFamily.Name = "buttonViewFamily";
+            this.buttonViewFamily.Size = new System.Drawing.Size(272, 33);
+            this.buttonViewFamily.TabIndex = 2;
+            this.buttonViewFamily.Text = "View Family";
+            this.buttonViewFamily.UseVisualStyleBackColor = true;
+            this.buttonViewFamily.Click += new System.EventHandler(this.buttonViewFamily_Click);
+            // 
+            // listBoxViewFamily
+            // 
+            this.listBoxViewFamily.FormattingEnabled = true;
+            this.listBoxViewFamily.ItemHeight = 16;
+            this.listBoxViewFamily.Location = new System.Drawing.Point(6, 200);
+            this.listBoxViewFamily.Name = "listBoxViewFamily";
+            this.listBoxViewFamily.Size = new System.Drawing.Size(623, 340);
+            this.listBoxViewFamily.TabIndex = 0;
             // 
             // tabPageAddPerson
             // 
@@ -414,7 +456,6 @@
             this.splitContainerAddParents.Panel1.Controls.Add(this.labelFatherFirstName);
             this.splitContainerAddParents.Panel1.Controls.Add(this.checkBoxFatherKnow);
             this.splitContainerAddParents.Panel1.Enabled = false;
-            this.splitContainerAddParents.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainerAddParents_Panel1_Paint);
             // 
             // splitContainerAddParents.Panel2
             // 
@@ -430,7 +471,6 @@
             this.splitContainerAddParents.Panel2.Controls.Add(this.labelMotherFirstName);
             this.splitContainerAddParents.Panel2.Controls.Add(this.checkBoxMotherKnow);
             this.splitContainerAddParents.Panel2.Enabled = false;
-            this.splitContainerAddParents.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainerAddParents_Panel2_Paint);
             this.splitContainerAddParents.Size = new System.Drawing.Size(337, 537);
             this.splitContainerAddParents.SplitterDistance = 260;
             this.splitContainerAddParents.TabIndex = 0;
@@ -642,48 +682,6 @@
             this.checkBoxMotherKnow.UseVisualStyleBackColor = true;
             this.checkBoxMotherKnow.CheckedChanged += new System.EventHandler(this.checkBoxMotherKnow_CheckedChanged);
             // 
-            // tabPagePeopleList
-            // 
-            this.tabPagePeopleList.Controls.Add(this.label3);
-            this.tabPagePeopleList.Controls.Add(this.buttonViewFamily);
-            this.tabPagePeopleList.Controls.Add(this.listBoxViewFamily);
-            this.tabPagePeopleList.Location = new System.Drawing.Point(4, 25);
-            this.tabPagePeopleList.Name = "tabPagePeopleList";
-            this.tabPagePeopleList.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPagePeopleList.Size = new System.Drawing.Size(635, 543);
-            this.tabPagePeopleList.TabIndex = 1;
-            this.tabPagePeopleList.Text = "View saved family members";
-            this.tabPagePeopleList.UseVisualStyleBackColor = true;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(78, 66);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(455, 17);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "To view an updated list of family members, click \"View Family\"";
-            // 
-            // buttonViewFamily
-            // 
-            this.buttonViewFamily.Location = new System.Drawing.Point(179, 140);
-            this.buttonViewFamily.Name = "buttonViewFamily";
-            this.buttonViewFamily.Size = new System.Drawing.Size(272, 33);
-            this.buttonViewFamily.TabIndex = 2;
-            this.buttonViewFamily.Text = "View Family";
-            this.buttonViewFamily.UseVisualStyleBackColor = true;
-            this.buttonViewFamily.Click += new System.EventHandler(this.buttonViewFamily_Click);
-            // 
-            // listBoxViewFamily
-            // 
-            this.listBoxViewFamily.FormattingEnabled = true;
-            this.listBoxViewFamily.ItemHeight = 16;
-            this.listBoxViewFamily.Location = new System.Drawing.Point(6, 200);
-            this.listBoxViewFamily.Name = "listBoxViewFamily";
-            this.listBoxViewFamily.Size = new System.Drawing.Size(623, 340);
-            this.listBoxViewFamily.TabIndex = 0;
-            // 
             // buttonClearFather
             // 
             this.buttonClearFather.Location = new System.Drawing.Point(198, 218);
@@ -886,6 +884,8 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabControlPerson.ResumeLayout(false);
+            this.tabPagePeopleList.ResumeLayout(false);
+            this.tabPagePeopleList.PerformLayout();
             this.tabPageAddPerson.ResumeLayout(false);
             this.splitContainerAddPerson.Panel1.ResumeLayout(false);
             this.splitContainerAddPerson.Panel1.PerformLayout();
@@ -898,8 +898,6 @@
             this.splitContainerAddParents.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerAddParents)).EndInit();
             this.splitContainerAddParents.ResumeLayout(false);
-            this.tabPagePeopleList.ResumeLayout(false);
-            this.tabPagePeopleList.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
